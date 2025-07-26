@@ -6,16 +6,16 @@ type FooterNavigationProps = {
 
 const FooterNavigation = ({ currentColorTheme }: FooterNavigationProps) => {
   return (
-    <footer className='h-[80px] shadow-sm dark:shadow-md bg-white dark:bg-silver '>
+    <footer className='h-[80px] border-t-1 border-gray-100 dark:border-gray-600 bg-white dark:bg-silver '>
       <div className='container flex items-center justify-center gap-3 xl:max-w-[1280px] mx-auto px-4 py-4 h-full'>
-        <p className='text-gray-800 dark:text-gray-50 text-lg font-semibold'>
+        <p className='text-gray-800 dark:text-gray-50 text-md font-semibold'>
           &copy; 2025
         </p>
         <a
           href='https://github.com/EmrahIso'
           target='_blank'
           rel='noopener noreferrer'
-          className='text-gray-800 hover:text-gray-600 dark:text-gray-50 dark:hover:text-gray-200 flex items-center gap-2 text-lg font-semibold'
+          className='text-gray-800 hover:text-gray-600 dark:text-gray-50 dark:hover:text-gray-200 flex items-center gap-2 text-md font-semibold'
         >
           Emrah Isovic
           {currentColorTheme === 'light' ? (

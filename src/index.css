@@ -20,3 +20,14 @@ body {
 body {
   font-family: 'Nunito Sans', Arial, helvetica, sans-serif;
 }
+
+@media (max-width: 450px) {
+  .xs-mobile-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+.custom-shadow-small {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.125);
+}

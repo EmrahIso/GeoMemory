@@ -12,7 +12,7 @@ const ThemeSwitchButton = ({
   return (
     <button
       type='button'
-      className='flex items-center text-lg gap-2 dark:gap-2.5 p-2.5 font-semibold text-gray-800 dark:text-gray-50 cursor-pointer'
+      className='flex items-center text-md gap-2 dark:gap-2.5 p-2.5 font-semibold text-gray-800 dark:text-gray-50 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 rounded-2xl transition-colors'
       onClick={changeColorThemeHandler}
     >
       {currentColorTheme === 'light' ? (
