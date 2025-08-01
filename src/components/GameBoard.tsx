@@ -29,6 +29,21 @@ const GameBoard = ({
     const clickedCard = event.target as HTMLElement;
     const clickedCardId: string = clickedCard.id;
 
+    handleCardActivation(clickedCardId);
+  };
+
+  const cardKeyDownHandler: React.KeyboardEventHandler<HTMLElement> = (
+    event: React.KeyboardEvent<HTMLElement>
+  ) => {
+    const clickedCard = event.target as HTMLElement;
+    const clickedCardId: string = clickedCard.id;
+
+    if (event.key === 'Enter' || event.key === ' ') {
+      handleCardActivation(clickedCardId);
+    }
+  };
+
+  const handleCardActivation = (clickedCardId: string): void => {
     const CardWithClickedCardId: CardType | undefined = roundCards.find(
       (card: CardType) => card.country.key === clickedCardId
     );
@@ -111,6 +126,7 @@ const GameBoard = ({
           <Card
             key={card.country.key}
             cardClickHandler={cardClickHandler}
+            cardKeyDownHandler={cardKeyDownHandler}
             countryData={card.country}
           />
         );

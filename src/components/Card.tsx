@@ -3,9 +3,14 @@ import type { Country } from './App';
 type CardProps = {
   countryData: Country;
   cardClickHandler: React.MouseEventHandler<HTMLElement>;
+  cardKeyDownHandler: React.KeyboardEventHandler<HTMLElement>;
 };
 
-const Card = ({ countryData, cardClickHandler }: CardProps) => {
+const Card = ({
+  countryData,
+  cardClickHandler,
+  cardKeyDownHandler,
+}: CardProps) => {
   return (
     <article
       role='button'
@@ -13,6 +18,7 @@ const Card = ({ countryData, cardClickHandler }: CardProps) => {
       className='grid grid-template-rows[160px, 1fr] bg-white dark:bg-silver custom-shadow-small dark:shadow-md rounded-md mx-auto w-[288px] sm:w-[280px] cursor-pointer hover:scale-x-[1.05] hover:scale-y-[1.05] transition-transform'
       id={countryData.key}
       onClick={cardClickHandler}
+      onKeyDown={cardKeyDownHandler}
     >
       <img
         className='h-[160px] w-full rounded-t-md pointer-events-none'

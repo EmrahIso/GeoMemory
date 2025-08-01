@@ -5,7 +5,7 @@ type HowToPlayGeoMemoryProps = {
 const HowToPlayGeoMemory = ({ backToHomeHandler }: HowToPlayGeoMemoryProps) => {
   return (
     <article className='text-gray-800 dark:text-gray-200 flex justify-center flex-col container min-h-[800px] md:max-w-[768px] mx-auto px-4 py-4'>
-      <h2 className='sm:text-2xl text-xl sm:mt-8 mt-2 font-bold text-gray-900 dark:text-gray-50'>
+      <h2 className='sm:text-2xl text-xl sm:mt-8 mt-6 font-bold text-gray-900 dark:text-gray-50'>
         🧠 How to Play the 'GeoMemory' Memory Card Game?
       </h2>
       <p className='text-lg mt-10'>
