@@ -36,15 +36,15 @@ export default tseslint.config([
       // other options...
     },
   },
-])
+]);
 ```
 
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
 ```js
 // eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+import reactX from 'eslint-plugin-react-x';
+import reactDom from 'eslint-plugin-react-dom';
 
 export default tseslint.config([
   globalIgnores(['dist']),
@@ -65,5 +65,7 @@ export default tseslint.config([
       // other options...
     },
   },
-])
+]);
 ```
+
+Memory Card Game is a fun and challenging React app where your goal is to click as many unique cards as possible without repeating any. Each time you click, the cards are shuffled to test your memory and focus. Your current score increases with every correct click, and the best score is saved so you can keep improving.

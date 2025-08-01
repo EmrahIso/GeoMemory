@@ -58,6 +58,7 @@ const HowToPlayGeoMemory = ({ backToHomeHandler }: HowToPlayGeoMemoryProps) => {
         <button
           className='font-semibold text-md inline-block text-gray-800 dark:text-gray-50 cursor-pointer bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 rounded-2xl py-2 px-4 mb-8 transition-colors'
           onClick={backToHomeHandler}
+          aria-label='Return to main screen'
         >
           Back to main screen
         </button>

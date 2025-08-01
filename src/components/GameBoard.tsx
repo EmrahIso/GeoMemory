@@ -33,49 +33,38 @@ const GameBoard = ({
       (card: CardType) => card.country.key === clickedCardId
     );
 
-    if (CardWithClickedCardId !== undefined) {
-      // Click on memory card
+    if (CardWithClickedCardId === undefined) {
+      return;
+    }
 
-      if (CardWithClickedCardId.isClicked === false) {
-        const roundCardsCopy: CardTypesArray = roundCards;
+    // Click on memory card
 
-        const roundCardsCopyWithoutClickedCard: CardTypesArray =
-          roundCardsCopy.filter(
-            (roundCard: CardType) => roundCard.country.key !== clickedCardId
-          );
+    if (!CardWithClickedCardId.isClicked) {
+      const updatedCards: CardTypesArray = roundCards.map((card) =>
+        card.country.key === clickedCardId ? { ...card, isClicked: true } : card
+      );
 
-        const newClickedCardData: CardType = CardWithClickedCardId;
-        newClickedCardData.isClicked = true;
+      const shuffledRoundCardsCopyWithoutClickedCard: CardTypesArray =
+        shuffleArray(updatedCards);
 
-        roundCardsCopyWithoutClickedCard.push(newClickedCardData);
+      setRoundCards(shuffledRoundCardsCopyWithoutClickedCard);
+      updateScore(currentScore + 1);
 
-        const shuffledRoundCardsCopyWithoutClickedCard: CardTypesArray =
-          shuffleArray(roundCardsCopyWithoutClickedCard);
-
-        setRoundCards(shuffledRoundCardsCopyWithoutClickedCard);
-        updateScore(currentScore + 1);
-
-        console.log('Round over: ', checkIfRoundIsOver());
-
-        if (checkIfRoundIsOver()) {
-          // round over
-
-          if (currentScore > currentBestScore) {
-            updateBestScore(currentScore + 1);
-          }
-          startLoading(); // To render a new set of country cards.
-        }
-      } else {
-        // GAME OVER
-
-        console.log('game is over');
-
-        if (currentScore > currentBestScore) {
-          updateBestScore(currentScore);
+      if (checkIfRoundIsOver()) {
+        // round over
+        if (currentScore + 1 > currentBestScore) {
+          updateBestScore(currentScore + 1);
         }
 
-        goToEndScreen();
+        startLoading(); // To render a new set of country cards.
       }
+    } else {
+      // GAME OVER
+
+      if (currentScore > currentBestScore) {
+        updateBestScore(currentScore);
+      }
+      goToEndScreen();
     }
   };
 
@@ -84,7 +73,7 @@ const GameBoard = ({
       (card: CardType) => card.isClicked === false
     );
 
-    if (unClickedCards.length === 0) {
+    if (unClickedCards.length <= 1) {
       return true;
     }
 
@@ -113,7 +102,10 @@ const GameBoard = ({
   };
 
   return (
-    <div className='grid sm:grid-cols-2 lg:mb-25 mb-10 lg:mt-31 mt-12 lg:grid-cols-3 gap-x-12 gap-y-12 xs-mobile-grid'>
+    <section
+      aria-label='Memory game cards'
+      className='grid sm:grid-cols-2 lg:mb-25 mb-10 lg:mt-31 mt-12 lg:grid-cols-3 gap-x-12 gap-y-12 xs-mobile-grid'
+    >
       {roundCards.map((card: CardType): ReactNode => {
         return (
           <Card
@@ -123,7 +115,7 @@ const GameBoard = ({
           />
         );
       })}
-    </div>
+    </section>
   );
 };
 

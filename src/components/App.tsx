@@ -124,8 +124,6 @@ const App = () => {
     if (gameState === 'loading') {
       const allCardsPlaceholder: CardTypesArray = [];
 
-      console.log('fetching');
-
       async function fetchCountries() {
         try {
           const response: Response = await fetch(
@@ -225,11 +223,14 @@ const App = () => {
       {gameState === 'playing' && (
         <main className='bg-gray-50 dark:bg-gray-800'>
           <div className='container xl:max-w-[1280px] mx-auto px-4 py-4'>
-            <div className='mt-10 flex items-center justify-between'>
+            <section
+              aria-label='Score information'
+              className='mt-10 flex items-center justify-between'
+            >
               <ScoreBoard score={score} />
               <BestScoreBoard bestScore={bestScore} />
-            </div>
-            <div>
+            </section>
+            <section aria-label='Game board'>
               <GameBoard
                 roundCards={roundCards}
                 setRoundCards={setRoundCards}
@@ -240,7 +241,7 @@ const App = () => {
                 startLoading={startLoading}
                 goToEndScreen={goToEndScreen}
               />
-            </div>
+            </section>
           </div>
         </main>
       )}
@@ -279,20 +280,3 @@ const App = () => {
 };
 
 export default App;
-
-/*
-
-  - Navigation
-
-  - Game Board
-
-    - CardType
-
-  - Score
-
-  - Dialogs
-
-  - Footer
-
-
-*/
