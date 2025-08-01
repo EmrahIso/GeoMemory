@@ -9,7 +9,7 @@ import HowToPlayGeoMemory from './HowToPlayGeoMemory';
 
 export type colorThemeType = 'light' | 'dark';
 
-type GameStateType = 'idle' | 'loading' | 'playing' | 'about';
+type GameStateType = 'idle' | 'loading' | 'playing' | 'about' | 'finished';
 
 export type Country = {
   flags: {
@@ -23,9 +23,41 @@ export type Country = {
   key: string;
 };
 
-export type AllCountriesArray = Country[];
+type AllCountriesArray = Country[];
+
+export type CardType = {
+  isClicked: boolean;
+  country: Country;
+};
+
+export type CardTypesArray = CardType[];
 
 const App = () => {
+  // Score and Best Score control
+
+  const [score, setScore] = useState<number>(0);
+
+  const storageBestScore: string | null = localStorage.getItem(
+    '--geo-memory-best-score'
+  );
+
+  let defaultBestScore: number = 0;
+
+  if (storageBestScore !== null) {
+    defaultBestScore = Number(storageBestScore);
+  }
+
+  const [bestScore, setBestScore] = useState<number>(defaultBestScore);
+
+  const updateScore = (newScore: number): void => {
+    setScore(newScore);
+  };
+
+  const updateBestScore = (newBestScore: number): void => {
+    localStorage.setItem('--geo-memory-best-score', String(newBestScore));
+    setBestScore(newBestScore);
+  };
+
   // Color theme control
 
   const storageColorTheme: string | null = localStorage.getItem(
@@ -62,8 +94,16 @@ const App = () => {
     setGameState('loading');
   };
 
+  const startLoading = () => {
+    setGameState('loading');
+  };
+
   const startGameRound = () => {
     setGameState('playing');
+  };
+
+  const goToEndScreen = () => {
+    setGameState('finished');
   };
 
   const howToPlayGameHandler: React.MouseEventHandler<
@@ -78,11 +118,11 @@ const App = () => {
 
   // API Fetch
 
-  const [allCountries, setAllCountries] = useState<AllCountriesArray>([]);
+  const [roundCards, setRoundCards] = useState<CardTypesArray>([]);
 
   useEffect((): void => {
     if (gameState === 'loading') {
-      const allCountriesPlaceholder: AllCountriesArray = [];
+      const allCardsPlaceholder: CardTypesArray = [];
 
       console.log('fetching');
 
@@ -100,21 +140,26 @@ const App = () => {
             responseJson.length - 1
           );
 
-          responseJson.forEach((countryObj: Country, index: number) => {
+          responseJson.forEach((cardObj: Country, index: number) => {
             if (randomNumbers.includes(index)) {
               const newCountryObj: Country = {
-                flags: countryObj['flags'],
+                flags: cardObj['flags'],
                 name: {
-                  common: countryObj['name']['common'],
+                  common: cardObj['name']['common'],
                 },
-                key: countryObj['name']['common'] + '-key',
+                key: cardObj['name']['common'] + '-key',
               };
 
-              allCountriesPlaceholder.push(newCountryObj);
+              const newCardObj: CardType = {
+                isClicked: false,
+                country: newCountryObj,
+              };
+
+              allCardsPlaceholder.push(newCardObj);
             }
           });
 
-          setAllCountries(allCountriesPlaceholder);
+          setRoundCards(allCardsPlaceholder);
 
           startGameRound();
         } catch (error) {
@@ -153,7 +198,7 @@ const App = () => {
       </HeaderNavigation>
 
       {gameState === 'idle' && (
-        <div className='container flex items-center flex-col gap-10 h-[800px] justify-center xl:max-w-[1280px] mx-auto px-4 py-4'>
+        <main className='container flex items-center flex-col gap-10 h-[800px] justify-center xl:max-w-[1280px] mx-auto px-4 py-4'>
           <button
             className='font-bold text-xl text-gray-800 dark:text-gray-50 cursor-pointer bg-gray-50 hover:bg-gray-100 dark:bg-gray-600 dark:hover:bg-gray-500 rounded-2xl py-3.5 px-4.5 transition-colors'
             onClick={startLoadingHandler}
@@ -166,26 +211,35 @@ const App = () => {
           >
             How to play this game?
           </button>
-        </div>
+        </main>
       )}
 
       {gameState === 'loading' && (
-        <div className='container flex items-center flex-col gap-10 h-[800px] justify-center xl:max-w-[1280px] mx-auto px-4 py-4'>
+        <main className='container flex items-center flex-col gap-10 h-[800px] justify-center xl:max-w-[1280px] mx-auto px-4 py-4'>
           <p className='text-2xl font-medium text-gray-800 dark:text-gray-100'>
             Loading round ...
           </p>
-        </div>
+        </main>
       )}
 
       {gameState === 'playing' && (
         <main className='bg-gray-50 dark:bg-gray-800'>
           <div className='container xl:max-w-[1280px] mx-auto px-4 py-4'>
             <div className='mt-10 flex items-center justify-between'>
-              <ScoreBoard />
-              <BestScoreBoard />
+              <ScoreBoard score={score} />
+              <BestScoreBoard bestScore={bestScore} />
             </div>
             <div>
-              <GameBoard allCountries={allCountries} />
+              <GameBoard
+                roundCards={roundCards}
+                setRoundCards={setRoundCards}
+                updateScore={updateScore}
+                currentScore={score}
+                updateBestScore={updateBestScore}
+                currentBestScore={bestScore}
+                startLoading={startLoading}
+                goToEndScreen={goToEndScreen}
+              />
             </div>
           </div>
         </main>
@@ -194,6 +248,28 @@ const App = () => {
       {gameState === 'about' && (
         <main className='bg-gray-50 dark:bg-gray-800'>
           <HowToPlayGeoMemory backToHomeHandler={backToHomeHandler} />
+        </main>
+      )}
+
+      {gameState === 'finished' && (
+        <main className='container flex items-center flex-col gap-10 h-[800px] justify-center xl:max-w-[1280px] mx-auto px-4 py-4'>
+          <h2 className='font-bold sm:text-4xl text-2xl text-gray-900 dark:text-gray-50'>
+            🧠 The game is over!
+          </h2>
+          <p className='text-xl font-medium text-gray-800 dark:text-gray-100'>
+            Your current best score is:
+          </p>
+          <span className='text-gray-900 mt-8 text-4xl dark:text-gray-50 font-bold'>
+            🏆 {bestScore}
+          </span>
+          <div className='mt-12 flex justify-center'>
+            <button
+              className='font-semibold text-md inline-block text-gray-800 dark:text-gray-50 cursor-pointer bg-gray-100 hover:bg-gray-200 dark:bg-gray-600 dark:hover:bg-gray-500 rounded-2xl py-2 px-4 mt-8 transition-colors'
+              onClick={() => window.location.reload()}
+            >
+              I want to try again!
+            </button>
+          </div>
         </main>
       )}
 
@@ -210,7 +286,7 @@ export default App;
 
   - Game Board
 
-    - Card
+    - CardType
 
   - Score
 
