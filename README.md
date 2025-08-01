@@ -1,71 +1,73 @@
-# React + TypeScript + Vite
+# GeoMemory - Memory Card Game
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduction
 
-Currently, two official plugins are available:
+**Geo Memory** is a fun and challenging React app where your goal is to click as many unique cards as possible without repeating any.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Each time you click, the cards are shuffled to test your memory and focus.
 
-## Expanding the ESLint configuration
+Your current score increases with every correct click, and the best score is saved so you can keep improving.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Tech Stack
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- ESLint
+- This project is using [REST Countries API](https://restcountries.com/)
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## Preview
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
+For now, you can try the live app at: [https://geomemory.pages.dev/](https://geomemory.pages.dev/)
+
+## Installation (for users)
+
+You don't need to install anything – just open the link in your browser:
+
+🔗 [https://geomemory.pages.dev/](https://geomemory.pages.dev/)
+
+## Installation (For Developers)
+
+Clone the repository and run it locally:
+
+```bash
+git clone https://github.com/EmrahIso/GeoMemory.git
+cd CVision
+npm install
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Then use one of the following commands:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+| Command           | What it does                             |
+| ----------------- | ---------------------------------------- |
+| `npm run dev`     | Starts the development server using Vite |
+| `npm run build`   | Builds the app for production            |
+| `npm run preview` | Serves the production build locally      |
+| `npm run lint`    | Checks your code with ESLint             |
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+## Contributing
 
-Memory Card Game is a fun and challenging React app where your goal is to click as many unique cards as possible without repeating any. Each time you click, the cards are shuffled to test your memory and focus. Your current score increases with every correct click, and the best score is saved so you can keep improving.
+Contributions are welcome! If you'd like to fix a bug, improve UX, or add a feature:
+
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes with clear messages ( best to use conventional commits )
+4. Submit a pull request
+
+> **Note:** This project currently does not include an open source license.\
+> If you're interested in contributing, please contact me first via email:\
+> 📧 **[emrahisovic20@gmail.com](mailto:emrahisovic20@gmail.com)**
+>
+> I’ll be happy to discuss and add an appropriate license before collaboration begins.
+
+Please follow these principles:
+
+- Keep PRs focused and small
+- Follow existing code style
+- Prioritize web accessibility and usability
+
+## Known Issues
+
+Found a bug or have a suggestion? Feel free to open an issue or reach out directly!
