@@ -33,7 +33,7 @@ Clone the repository and run it locally:
 
 ```bash
 git clone https://github.com/EmrahIso/GeoMemory.git
-cd CVision
+cd GeoMemory
 npm install
 npm run dev
 ```
